@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 import csv
+import os
+
 
 
 class Persistor(ABC):
@@ -20,9 +22,13 @@ class Persistor(ABC):
     def append_data(self, data):
         raise NotImplementedError
 
-with open('csvexample.csv','w', newline='') as myFile:
+THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+my_file = os.path.join(THIS_FOLDER, 'csvexample.csv')
+
+
+with open(my_file,'w', newline='') as myFile:
     reader = csv.reader(myFile)
     writer = csv.writer(myFile)
     row = "item, title, name\n"
-    for row in reader:
-        print(row)
+   # for row in reader:
+   # print(row)

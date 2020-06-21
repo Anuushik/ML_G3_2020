@@ -15,7 +15,7 @@ class Scraper:
         # opening the page and taking the data
             data = uReq(url)
             page_html = data.read()
-      #  response = requests.get(url)
+      #     response = requests.get(url)
             data.close()
         #html parsing
             page_soup = BeautifulSoup(page_html, "html.parser")
