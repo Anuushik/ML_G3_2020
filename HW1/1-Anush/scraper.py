@@ -3,10 +3,15 @@ import requests
 from bs4 import BeautifulSoup
 from urllib.request import urlopen as uReq
 
+from storage import Persistor
+
 logger = logging.getLogger(__name__)
 
 
 class Scraper:
+
+        def __init__(self):
+            self.persistor = Persistor()
 
         def scrape(self):
             #Gives the text from zigzag website
@@ -17,33 +22,36 @@ class Scraper:
             page_html = data.read()
       #     response = requests.get(url)
             data.close()
-        #html parsing
-            page_soup = BeautifulSoup(page_html, "html.parser")
-          #  print(page_soup.body)
-            #for each product
-            categories = page_soup.findAll("div", {"class":"item_category"})
-            print(category[0])
+        # #html parsing
+        #     page_soup = BeautifulSoup(page_html, "html.parser")
+        #   #  print(page_soup.body)
+        #     #for each product
+        #     categories = page_soup.findAll("div", {"class":"item_category"})
+        #     print(category[0])
 
-            for category in categories:
-                item = category.a["item_name item_link"]
-                title = category.findAll("a", {"class":"item_name"})
-                name = title[0].text
+        #     for category in categories:
+        #         item = category.a["item_name item_link"]
+        #         title = category.findAll("a", {"class":"item_name"})
+        #         name = title[0].text
 
-                print("item: ", item)
-                print ("title: ", title )
-                print("name: ", name)
+        #         print("item: ", item)
+        #         print ("title: ", title )
+        #         print("name: ", name)
 
+            self.persistor.save_raw_data(page_html, "tvs.html")
 
+        #   '''   if not response.ok:
+                    # log the error
+            #        logger.error(response.text)
 
-  #   '''   if not response.ok:
-            # log the error
-    #        logger.error(response.text)
+            #    else:
+                    # Note: here json can be used as response.json
+            #      data = response.text
 
-    #    else:
-            # Note: here json can be used as response.json
-      #      data = response.text
+                    # save scraped objects here
+                    # you can save url to identify already scrapped objects
+                    # filename = title + '.html'
+                    # self.storage.save_raw_data(data, filename)
 
-            # save scraped objects here
-            # you can save url to identify already scrapped objects
-      #      self.storage.save_raw_data(data)'''
-
+scraper =Scraper()
+scraper.scrape()

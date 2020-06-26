@@ -42,8 +42,9 @@ def parse():
     storage = Persistor()
     parser = Parser()
 
+
     raw_data = storage.read_raw_data()
-    parsed_files = [parser.parse_object(file) for file in raw_data]
+    parsed_files = parser.parse_object(raw_data)
     storage.save_csv(parsed_files)
 
 
